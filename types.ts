@@ -15,10 +15,11 @@ export interface Lesson {
   date: string;
   time: string;
   duration: number; // minutes
-  topic: string;
+  topic?: string; // opcjonalne
   price: number; // price for this specific lesson
   status: 'planned' | 'completed' | 'cancelled';
   notes?: string;
+  groupId?: string; // identyfikator serii lekcji
 }
 
 export interface AppState {

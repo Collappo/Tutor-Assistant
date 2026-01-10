@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig(({ mode }) => {
   return {
+    base: "/Tutor-Assistant",
     plugins: [react()],
     server: {
       port: 3115

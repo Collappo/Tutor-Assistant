@@ -17,9 +17,10 @@ interface DashboardProps {
   students: Student[];
   lessons: Lesson[];
   theme: ThemeColor;
+  setActiveTab: (tab: string) => void;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ students, lessons, theme: currentTheme }) => {
+const Dashboard: React.FC<DashboardProps> = ({ students, lessons, theme: currentTheme, setActiveTab }) => {
   const theme = THEMES.find(t => t.id === currentTheme) || THEMES[0];
 
   const totalEarnings = lessons
@@ -55,11 +56,16 @@ const Dashboard: React.FC<DashboardProps> = ({ students, lessons, theme: current
   const weeklyEarningsSum = chartData.reduce((acc, curr) => acc + curr.amount, 0);
 
   const stats = [
-    { label: 'Uczniowie', value: students.length, icon: Users, color: 'text-blue-500' },
-    { label: 'Suma Zarobków', value: `${totalEarnings} zł`, icon: History, color: 'text-emerald-500' },
-    { label: 'Zarobki (7 dni)', value: `${weeklyEarningsSum} zł`, icon: Wallet, color: 'text-amber-500' },
-    { label: 'Zaplanowane', value: upcomingLessonsCount, icon: CalendarCheck, color: 'text-violet-500' },
+    { id: 'students', label: 'Uczniowie', value: students.length, icon: Users, color: 'text-blue-500' },
+    { id: 'earnings_total', label: 'Suma Zarobków', value: `${totalEarnings} zł`, icon: History, color: 'text-emerald-500', noRedirect: true },
+    { id: 'earnings_week', label: 'Zarobki (7 dni)', value: `${weeklyEarningsSum} zł`, icon: Wallet, color: 'text-amber-500', noRedirect: true },
+    { id: 'lessons', label: 'Zaplanowane', value: upcomingLessonsCount, icon: CalendarCheck, color: 'text-violet-500' },
   ];
+
+  const handleStatClick = (statId: string) => {
+    if (statId === 'students') setActiveTab('students');
+    if (statId === 'lessons') setActiveTab('lessons');
+  };
 
   const getThemeHexColor = () => {
     switch (theme.id) {
@@ -72,25 +78,32 @@ const Dashboard: React.FC<DashboardProps> = ({ students, lessons, theme: current
   };
 
   return (
-    <div className="space-y-6 md:space-y-8 animate-in fade-in duration-500 pb-10">
+    <div className="space-y-6 md:space-y-8 animate-in fade-in duration-500 pb-10 px-1 md:px-0">
       <header>
         <h2 className="text-2xl md:text-3xl font-bold">Witaj ponownie! 👋</h2>
         <p className="text-zinc-400 mt-1 text-sm md:text-base">Oto podsumowanie Twoich działań.</p>
       </header>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+      {/* Zmieniono grid-cols-1 na grid-cols-2 dla mobile (2x2) */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
         {stats.map((stat, i) => (
-          <div key={i} className="bg-zinc-900 border border-zinc-800 p-5 md:p-6 rounded-2xl hover:border-zinc-700 transition-colors group">
-            <div className="flex justify-between items-start mb-4">
-              <div className={`p-2.5 rounded-xl bg-zinc-950 border border-zinc-800 group-hover:${theme.borderClass} transition-colors`}>
-                <stat.icon size={20} className={stat.color} />
+          <div 
+            key={i} 
+            onClick={() => !stat.noRedirect && handleStatClick(stat.id)}
+            className={`bg-zinc-900 border border-zinc-800 p-4 md:p-6 rounded-2xl border-zinc-800 transition-all group ${!stat.noRedirect ? 'cursor-pointer hover:border-zinc-700 hover:scale-[1.02] active:scale-95' : ''}`}
+          >
+            <div className="flex justify-between items-start mb-3 md:mb-4">
+              <div className={`p-2 rounded-xl bg-zinc-950 border border-zinc-800 group-hover:${theme.borderClass} transition-colors`}>
+                <stat.icon size={18} className={`${stat.color} md:w-5 md:h-5`} />
               </div>
-              <span className="flex items-center text-[10px] md:text-xs font-medium text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded-full">
-                Statystyki <ArrowUpRight size={10} className="ml-1" />
-              </span>
+              {!stat.noRedirect && (
+                <span className="hidden xs:flex items-center text-[8px] md:text-xs font-medium text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded-full">
+                  Zobacz <ArrowUpRight size={8} className="ml-1 md:w-2.5 md:h-2.5" />
+                </span>
+              )}
             </div>
-            <h3 className="text-zinc-400 text-xs md:text-sm font-medium">{stat.label}</h3>
-            <p className="text-xl md:text-2xl font-bold mt-1">{stat.value}</p>
+            <h3 className="text-zinc-400 text-[10px] md:text-sm font-medium">{stat.label}</h3>
+            <p className="text-lg md:text-2xl font-bold mt-0.5 md:mt-1 truncate">{stat.value}</p>
           </div>
         ))}
       </div>
@@ -164,7 +177,7 @@ const Dashboard: React.FC<DashboardProps> = ({ students, lessons, theme: current
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium truncate group-hover:text-white transition-colors">{student?.name}</p>
-                      <p className="text-[10px] md:text-xs text-zinc-500 truncate">{lesson.time} • {lesson.topic}</p>
+                      <p className="text-[10px] md:text-xs text-zinc-500 truncate">{lesson.time} • {lesson.topic || 'Bez tematu'}</p>
                     </div>
                     <div className="text-right shrink-0">
                       <p className="text-[10px] font-semibold text-zinc-500">{lesson.date.split('-').slice(1).reverse().join('.')}</p>

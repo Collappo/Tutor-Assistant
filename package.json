@@ -1,20 +1,24 @@
 {
   "name": "asystent-korepetycji",
+  "homepage": "https://collappo.github.io/Tutor-Assistant/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
-    "react-dom": "^19.2.3",
+    "@google/genai": "^1.35.0",
+    "gh-pages": "^6.3.0",
     "lucide-react": "^0.562.0",
     "react": "^19.2.3",
-    "@google/genai": "^1.35.0",
-    "recharts": "^3.6.0",
-    "react-markdown": "^10.1.0"
+    "react-dom": "^19.2.3",
+    "react-markdown": "^10.1.0",
+    "recharts": "^3.6.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
