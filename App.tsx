@@ -77,23 +77,23 @@ const App: React.FC = () => {
         return <Dashboard students={state.students} lessons={state.lessons} theme={state.theme} setActiveTab={setActiveTab} />;
       case 'students':
         return (
-          <Students 
-            students={state.students} 
-            onAddStudent={addStudent} 
+          <Students
+            students={state.students}
+            onAddStudent={addStudent}
             onUpdateStudent={updateStudent}
             onDeleteStudent={deleteStudent}
-            theme={state.theme} 
+            theme={state.theme}
           />
         );
       case 'lessons':
         return (
-          <Lessons 
-            lessons={state.lessons} 
-            students={state.students} 
-            onAddLesson={addLesson} 
+          <Lessons
+            lessons={state.lessons}
+            students={state.students}
+            onAddLesson={addLesson}
             onUpdateLesson={updateLesson}
             onDeleteLesson={deleteLesson}
-            theme={state.theme} 
+            theme={state.theme}
           />
         );
       case 'settings':
@@ -104,7 +104,7 @@ const App: React.FC = () => {
               <p className="text-zinc-400">Spersonalizuj swój asystent pracy.</p>
             </div>
 
-            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 md:p-8 space-y-8">
+            <div className="bg-zinc-900   rounded-2xl p-6 md:p-8 space-y-8">
               <div className="space-y-4">
                 <label className="text-sm font-semibold text-zinc-400 uppercase tracking-widest flex items-center gap-2">
                   <Palette size={16} /> Kolor Przewodni
@@ -119,7 +119,7 @@ const App: React.FC = () => {
                       <div className={`w-6 h-6 rounded-full ${theme.bgClass}`}></div>
                       <span className="font-medium text-sm">{theme.label}</span>
                       {state.theme === theme.id && (
-                         <div className={`absolute top-2 right-2 w-2 h-2 rounded-full ${theme.bgClass} shadow-[0_0_10px_${theme.id}]`}></div>
+                        <div className={`absolute top-2 right-2 w-2 h-2 rounded-full ${theme.bgClass} shadow-[0_0_10px_${theme.id}]`}></div>
                       )}
                     </button>
                   ))}
@@ -127,14 +127,14 @@ const App: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 md:p-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
+            <a href='https://github.com/Collappo/Tutor-Assistant' target={"_blank"} className="bg-zinc-900   rounded-2xl p-6 md:p-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
               <div className="flex items-center gap-2 text-zinc-400">
-                 Made with <Heart size={16} className="text-red-500 fill-red-500" /> for Tutors
+                Tutor-Assistant zrobiony przez Collappo oraz z wielką pomocą Gemini 🩵
               </div>
               <a href="#" className="flex items-center gap-2 text-zinc-500 hover:text-zinc-300 transition-colors">
-                <div className="flex items-center gap-1"><Github size={20} /> v1.0.6</div>
+                <div className="flex items-center gap-1"><Github size={20} /></div>
               </a>
-            </div>
+            </a>
           </div>
         );
       default:
@@ -147,7 +147,7 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen flex bg-zinc-950 text-zinc-100">
       {isSidebarOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[90] md:hidden"
           onClick={() => setIsSidebarOpen(false)}
         />
@@ -157,13 +157,13 @@ const App: React.FC = () => {
         fixed inset-y-0 left-0 z-[100] transform transition-transform duration-300 ease-in-out md:translate-x-0
         ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
-        <Sidebar 
-          activeTab={activeTab} 
+        <Sidebar
+          activeTab={activeTab}
           setActiveTab={(tab) => {
             setActiveTab(tab);
             setIsSidebarOpen(false);
-          }} 
-          currentTheme={state.theme} 
+          }}
+          currentTheme={state.theme}
         />
       </div>
 
@@ -175,9 +175,9 @@ const App: React.FC = () => {
             </div>
             <span className="font-bold text-lg">Korepetycje</span>
           </div>
-          <button 
+          <button
             onClick={() => setIsSidebarOpen(true)}
-            className="p-2 bg-zinc-900 border border-zinc-800 rounded-lg hover:bg-zinc-800 transition-colors"
+            className="p-2 bg-zinc-900   rounded-lg hover:bg-zinc-800 transition-colors"
           >
             <Menu size={24} />
           </button>
