@@ -1,9 +1,9 @@
 
 import React from 'react';
-import { 
-  Users, 
-  CalendarCheck, 
-  Wallet, 
+import {
+  Users,
+  CalendarCheck,
+  Wallet,
   Clock,
   ArrowUpRight,
   TrendingUp,
@@ -33,12 +33,12 @@ const Dashboard: React.FC<DashboardProps> = ({ students, lessons, theme: current
     const days = ['Niedz', 'Pon', 'Wt', 'Śr', 'Czw', 'Pt', 'Sob'];
     const result = [];
     const now = new Date();
-    
+
     for (let i = 6; i >= 0; i--) {
       const d = new Date();
       d.setDate(now.getDate() - i);
       const dateStr = d.toISOString().split('T')[0];
-      
+
       const dailySum = lessons
         .filter(l => l.status === 'completed' && l.date === dateStr)
         .reduce((sum, lesson) => sum + (lesson.price || 0), 0);
@@ -87,10 +87,10 @@ const Dashboard: React.FC<DashboardProps> = ({ students, lessons, theme: current
       {/* Zmieniono grid-cols-1 na grid-cols-2 dla mobile (2x2) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
         {stats.map((stat, i) => (
-          <div 
-            key={i} 
+          <div
+            key={i}
             onClick={() => !stat.noRedirect && handleStatClick(stat.id)}
-            className={`bg-zinc-900 border border-zinc-800 p-4 md:p-6 rounded-2xl border-zinc-800 transition-all group ${!stat.noRedirect ? 'cursor-pointer hover:border-zinc-700 hover:scale-[1.02] active:scale-95' : ''}`}
+            className={`bg-zinc-900  p-4 md:p-6 rounded-2xl border-zinc-800 transition-all group ${!stat.noRedirect ? 'cursor-pointer hover:border-zinc-700 hover:scale-[1.02] active:scale-95' : ''}`}
           >
             <div className="flex justify-between items-start mb-3 md:mb-4">
               <div className={`p-2 rounded-xl bg-zinc-950 border border-zinc-800 group-hover:${theme.borderClass} transition-colors`}>
@@ -126,33 +126,33 @@ const Dashboard: React.FC<DashboardProps> = ({ students, lessons, theme: current
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={chartData}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#27272a" />
-                <XAxis 
-                  dataKey="name" 
-                  stroke="#71717a" 
-                  fontSize={10} 
-                  tickLine={false} 
-                  axisLine={false} 
+                <XAxis
+                  dataKey="name"
+                  stroke="#71717a"
+                  fontSize={10}
+                  tickLine={false}
+                  axisLine={false}
                   dy={10}
                 />
-                <YAxis 
-                  stroke="#71717a" 
-                  fontSize={10} 
-                  tickLine={false} 
+                <YAxis
+                  stroke="#71717a"
+                  fontSize={10}
+                  tickLine={false}
                   axisLine={false}
                   tickFormatter={(value) => value > 0 ? `${value}zł` : ''}
                 />
-                <Tooltip 
-                  cursor={{fill: '#18181b'}}
+                <Tooltip
+                  cursor={{ fill: '#18181b' }}
                   contentStyle={{ backgroundColor: '#09090b', borderColor: '#27272a', borderRadius: '12px', border: '1px solid #3f3f46' }}
                   itemStyle={{ color: '#f4f4f5', fontSize: '12px' }}
                   labelStyle={{ color: '#71717a', marginBottom: '4px', fontSize: '10px' }}
                   formatter={(value: number) => [`${value} zł`, 'Zarobek']}
                 />
                 <Bar dataKey="amount" radius={[4, 4, 0, 0]} barSize={30}>
-                   {chartData.map((entry, index) => (
-                    <Cell 
-                      key={`cell-${index}`} 
-                      fill={entry.amount > 0 ? getThemeHexColor() : 'transparent'} 
+                  {chartData.map((entry, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={entry.amount > 0 ? getThemeHexColor() : 'transparent'}
                     />
                   ))}
                 </Bar>
@@ -166,7 +166,7 @@ const Dashboard: React.FC<DashboardProps> = ({ students, lessons, theme: current
           <div className="space-y-3">
             {lessons
               .filter(l => l.status === 'planned')
-              .sort((a,b) => new Date(`${a.date} ${a.time}`).getTime() - new Date(`${b.date} ${b.time}`).getTime())
+              .sort((a, b) => new Date(`${a.date} ${a.time}`).getTime() - new Date(`${b.date} ${b.time}`).getTime())
               .slice(0, 5)
               .map((lesson, idx) => {
                 const student = students.find(s => s.id === lesson.studentId);
