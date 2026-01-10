@@ -46,8 +46,9 @@ const App: React.FC = () => {
     }
   };
 
-  const addLesson = (lesson: Lesson) => {
-    setState(prev => ({ ...prev, lessons: [...prev.lessons, lesson] }));
+  const addLesson = (lesson: Lesson | Lesson[]) => {
+    const lessonsToAdd = Array.isArray(lesson) ? lesson : [lesson];
+    setState(prev => ({ ...prev, lessons: [...prev.lessons, ...lessonsToAdd] }));
   };
 
   const updateLesson = (id: string, updates: Partial<Lesson>) => {
@@ -73,7 +74,7 @@ const App: React.FC = () => {
   const renderContent = () => {
     switch (activeTab) {
       case 'dashboard':
-        return <Dashboard students={state.students} lessons={state.lessons} theme={state.theme} />;
+        return <Dashboard students={state.students} lessons={state.lessons} theme={state.theme} setActiveTab={setActiveTab} />;
       case 'students':
         return (
           <Students 
@@ -96,7 +97,6 @@ const App: React.FC = () => {
           />
         );
       case 'settings':
-        const currentThemeData = THEMES.find(t => t.id === state.theme) || THEMES[0];
         return (
           <div className="max-w-3xl space-y-10 animate-in fade-in duration-500 pb-20">
             <div>
@@ -138,7 +138,7 @@ const App: React.FC = () => {
           </div>
         );
       default:
-        return <Dashboard students={state.students} lessons={state.lessons} theme={state.theme} />;
+        return <Dashboard students={state.students} lessons={state.lessons} theme={state.theme} setActiveTab={setActiveTab} />;
     }
   };
 
@@ -146,7 +146,6 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen flex bg-zinc-950 text-zinc-100">
-      {/* Mobile Backdrop */}
       {isSidebarOpen && (
         <div 
           className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[90] md:hidden"
@@ -154,7 +153,6 @@ const App: React.FC = () => {
         />
       )}
 
-      {/* Sidebar - Desktop fixed, Mobile drawer */}
       <div className={`
         fixed inset-y-0 left-0 z-[100] transform transition-transform duration-300 ease-in-out md:translate-x-0
         ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
@@ -169,9 +167,7 @@ const App: React.FC = () => {
         />
       </div>
 
-      {/* Main Content Area */}
       <div className="flex-1 flex flex-col md:ml-64 min-w-0">
-        {/* Mobile Header */}
         <header className="sticky top-0 z-[80] flex md:hidden items-center justify-between px-4 py-4 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800">
           <div className="flex items-center gap-2">
             <div className={`p-1.5 rounded-lg ${theme.bgClass} text-white`}>
