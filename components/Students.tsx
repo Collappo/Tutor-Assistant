@@ -95,8 +95,8 @@ const Students: React.FC<StudentsProps> = ({ students, onAddStudent, onUpdateStu
         </button>
       </div>
 
-      <div className="relative">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500" size={20} />
+      <div className="relative flex items-center">
+        <Search className="translate-x-[85%] text-zinc-500" size={20} />
         <input
           type="text"
           placeholder="Szukaj ucznia..."
