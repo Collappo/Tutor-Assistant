@@ -96,13 +96,13 @@ const Students: React.FC<StudentsProps> = ({ students, onAddStudent, onUpdateStu
       </div>
 
       <div className="relative flex items-center">
-        <Search className="translate-x-[85%] text-zinc-500" size={20} />
+        <Search className="absolute translate-x-1/2 text-zinc-500" size={20} />
         <input
           type="text"
           placeholder="Szukaj ucznia..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full bg-zinc-900   rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-zinc-700 transition-all text-sm"
+          className="w-full bg-zinc-900 rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:ring-2 focus:ring-zinc-700 transition-all text-sm"
         />
       </div>
 
