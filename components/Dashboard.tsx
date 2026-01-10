@@ -90,10 +90,10 @@ const Dashboard: React.FC<DashboardProps> = ({ students, lessons, theme: current
           <div
             key={i}
             onClick={() => !stat.noRedirect && handleStatClick(stat.id)}
-            className={`bg-zinc-900  p-4 md:p-6 rounded-2xl border-zinc-800 transition-all group ${!stat.noRedirect ? 'cursor-pointer hover:border-zinc-700 hover:scale-[1.02] active:scale-95' : ''}`}
+            className={`bg-zinc-900 p-4 md:p-6 rounded-2xl  transition-all group ${!stat.noRedirect ? 'cursor-pointer hover:border-zinc-700 hover:scale-[1.02] active:scale-95' : ''}`}
           >
             <div className="flex justify-between items-start mb-3 md:mb-4">
-              <div className={`p-2 rounded-xl bg-zinc-950 border border-zinc-800 group-hover:${theme.borderClass} transition-colors`}>
+              <div className={`p-2 rounded-xl bg-zinc-950 group-hover:${theme.borderClass} transition-colors`}>
                 <stat.icon size={18} className={`${stat.color} md:w-5 md:h-5`} />
               </div>
               {!stat.noRedirect && (
@@ -109,7 +109,7 @@ const Dashboard: React.FC<DashboardProps> = ({ students, lessons, theme: current
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-zinc-900 border border-zinc-800 rounded-2xl p-5 md:p-6">
+        <div className="lg:col-span-2 bg-zinc-900 rounded-2xl p-5 md:p-6">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
             <div>
               <h3 className="text-lg font-bold flex items-center gap-2">
@@ -161,7 +161,7 @@ const Dashboard: React.FC<DashboardProps> = ({ students, lessons, theme: current
           </div>
         </div>
 
-        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 md:p-6">
+        <div className="bg-zinc-900 rounded-2xl p-5 md:p-6">
           <h3 className="text-lg font-bold mb-4">Nadchodzące lekcje</h3>
           <div className="space-y-3">
             {lessons
@@ -171,7 +171,7 @@ const Dashboard: React.FC<DashboardProps> = ({ students, lessons, theme: current
               .map((lesson, idx) => {
                 const student = students.find(s => s.id === lesson.studentId);
                 return (
-                  <div key={idx} className="flex items-center gap-3 p-3 rounded-xl bg-zinc-950 border border-zinc-900 hover:border-zinc-800 transition-colors group">
+                  <div key={idx} className="flex items-center gap-3 p-3 rounded-xl bg-zinc-950 hover:border-zinc-800 transition-colors group">
                     <div className={`w-9 h-9 rounded-full ${theme.bgClass} flex items-center justify-center font-bold text-white shrink-0 text-sm`}>
                       {student?.name.charAt(0)}
                     </div>
