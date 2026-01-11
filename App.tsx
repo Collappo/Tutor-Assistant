@@ -131,9 +131,9 @@ const App: React.FC = () => {
               <div className="flex items-center gap-2 text-zinc-400">
                 Tutor-Assistant zrobiony przez Collappo oraz z wielką pomocą Gemini 🩵
               </div>
-              <a href="#" className="flex items-center gap-2 text-zinc-500 hover:text-zinc-300 transition-colors">
+              <div className="flex items-center gap-2 text-zinc-500 hover:text-zinc-300 transition-colors">
                 <div className="flex items-center gap-1"><Github size={20} /></div>
-              </a>
+              </div>
             </a>
           </div>
         );

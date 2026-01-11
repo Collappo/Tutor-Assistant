@@ -80,7 +80,7 @@ const Dashboard: React.FC<DashboardProps> = ({ students, lessons, theme: current
   return (
     <div className="space-y-6 md:space-y-8 animate-in fade-in duration-500 pb-10 px-1 md:px-0">
       <header>
-        <h2 className="text-2xl md:text-3xl font-bold">Witaj ponownie! 👋</h2>
+        <h2 className="text-2xl md:text-3xl font-bold">Witaj! 👋</h2>
         <p className="text-zinc-400 mt-1 text-sm md:text-base">Oto podsumowanie Twoich działań.</p>
       </header>
 

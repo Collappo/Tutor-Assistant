@@ -213,8 +213,8 @@ const Lessons: React.FC<LessonsProps> = ({ lessons, students, onAddLesson, onUpd
 
       {/* Filters Section */}
       <div className="flex flex-col md:flex-row gap-3 px-2">
-        <div className="relative flex-1">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500" size={18} />
+        <div className="relative flex flex-1 items-center">
+          <Search className="absolute translate-x-1/2 text-zinc-500" size={18} />
           <input
             type="text"
             placeholder="Szukaj lekcji..."
