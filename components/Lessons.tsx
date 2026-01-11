@@ -173,8 +173,8 @@ const Lessons: React.FC<LessonsProps> = ({ lessons, students, onAddLesson, onUpd
 
   const formatDateLabel = (dateStr: string) => {
     const d = new Date(dateStr);
-    const today = new Date().toISOString().split('T')[0];
-    if (dateStr === today) return 'Dzisiaj';
+    const today = new Date().toLocaleDateString();
+    if (new Date(dateStr).toLocaleDateString() === today) return 'Dzisiaj';
 
     return d.toLocaleDateString('pl-PL', { weekday: 'long', day: 'numeric', month: 'long' });
   };
