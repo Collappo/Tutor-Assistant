@@ -37,10 +37,11 @@ const Dashboard: React.FC<DashboardProps> = ({ students, lessons, theme: current
     for (let i = 6; i >= 0; i--) {
       const d = new Date();
       d.setDate(now.getDate() - i);
-      const dateStr = d.toISOString().split('T')[0];
+      // const dateStr = d.toISOString().split('T')[0];
+      const dateStr = d.toLocaleDateString()
 
       const dailySum = lessons
-        .filter(l => l.status === 'completed' && l.date === dateStr)
+        .filter(l => l.status === 'completed' && new Date(l.date).toLocaleDateString() === dateStr)
         .reduce((sum, lesson) => sum + (lesson.price || 0), 0);
 
       result.push({
