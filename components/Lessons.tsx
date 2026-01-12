@@ -15,7 +15,8 @@ import {
   RefreshCcw,
   ChevronDown,
   ChevronUp,
-  History
+  History,
+  Undo2
 } from 'lucide-react';
 import { Lesson, Student, ThemeColor } from '../types';
 import { THEMES } from '../constants';
@@ -201,14 +202,15 @@ const Lessons: React.FC<LessonsProps> = ({ lessons, students, onAddLesson, onUpd
     const student = students.find(s => s.id === lesson.studentId);
     const isPlanned = lesson.status === 'planned';
     const isCompleted = lesson.status === 'completed';
+    const isCancelled = lesson.status === 'cancelled';
 
     return (
       <div
         key={lesson.id}
         className={`rounded-xl p-3 md:p-4 border transition-all flex items-center gap-3 md:gap-4 ${isCompleted
-          ? 'bg-emerald-900/50 border-emerald-900/40'
+          ? 'bg-emerald-900/40 border-emerald-800/40'
           : 'bg-zinc-900 border-zinc-800 hover:border-zinc-700'
-          }`}
+          } ${isCancelled ? 'opacity-60 grayscale' : ''}`}
       >
         <div className="flex flex-col items-center justify-center min-w-[50px] md:min-w-[60px] py-1 border-r border-zinc-800 pr-3 md:pr-4">
           <span className="text-sm font-bold text-zinc-200">{lesson.time}</span>
@@ -266,30 +268,39 @@ const Lessons: React.FC<LessonsProps> = ({ lessons, students, onAddLesson, onUpd
           {openMenuId === lesson.id && (
             <div
               ref={menuRef}
-              className="absolute right-0 mt-2 w-44 bg-zinc-900 rounded-xl shadow-2xl z-50 overflow-hidden animate-in fade-in zoom-in-95 origin-top-right border border-zinc-800"
+              className="z-40 absolute right-0 mt-2 w-48 bg-zinc-900 rounded-xl shadow-2xl z-50 overflow-hidden animate-in fade-in zoom-in-95 origin-top-right border border-zinc-800"
             >
-              {isPlanned && (
+              {isPlanned ? (
+                <>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); onUpdateLesson(lesson.id, { status: 'completed' }); setOpenMenuId(null); }}
+                    className="w-full flex items-center gap-3 px-4 py-2.5 text-xs text-emerald-500 hover:bg-zinc-800 transition-colors font-medium"
+                  >
+                    <CheckCircle2 size={16} /> Oznacz: Wykonana
+                  </button>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); onUpdateLesson(lesson.id, { status: 'cancelled' }); setOpenMenuId(null); }}
+                    className="w-full flex items-center gap-3 px-4 py-2.5 text-xs text-rose-400 hover:bg-zinc-800 transition-colors"
+                  >
+                    <XCircle size={16} /> Odwołaj zajęcia
+                  </button>
+                </>
+              ) : (
                 <button
-                  onClick={(e) => { e.stopPropagation(); onUpdateLesson(lesson.id, { status: 'completed' }); setOpenMenuId(null); }}
-                  className="w-full flex items-center gap-3 px-4 py-2.5 text-xs text-emerald-500 hover:bg-zinc-800 transition-colors font-medium"
+                  onClick={(e) => { e.stopPropagation(); onUpdateLesson(lesson.id, { status: 'planned' }); setOpenMenuId(null); }}
+                  className="w-full flex items-center gap-3 px-4 py-2.5 text-xs text-blue-400 hover:bg-zinc-800 transition-colors font-medium"
                 >
-                  <CheckCircle2 size={16} /> Oznacz: Wykonana
+                  <Undo2 size={16} /> Przywróć do zaplanowanych
                 </button>
               )}
+
               <button
                 onClick={(e) => { e.stopPropagation(); handleOpenEditModal(lesson); }}
                 className="w-full flex items-center gap-3 px-4 py-2.5 text-xs text-zinc-300 hover:bg-zinc-800 transition-colors"
               >
                 <Edit2 size={16} className={theme.colorClass} /> Edytuj szczegóły
               </button>
-              {isPlanned && (
-                <button
-                  onClick={(e) => { e.stopPropagation(); onUpdateLesson(lesson.id, { status: 'cancelled' }); setOpenMenuId(null); }}
-                  className="w-full flex items-center gap-3 px-4 py-2.5 text-xs text-rose-400 hover:bg-zinc-800 transition-colors"
-                >
-                  <XCircle size={16} /> Odwołaj zajęcia
-                </button>
-              )}
+
               <div className="h-px bg-zinc-800 my-1"></div>
               <button
                 onClick={(e) => handleDelete(lesson.id, e)}
@@ -345,7 +356,7 @@ const Lessons: React.FC<LessonsProps> = ({ lessons, students, onAddLesson, onUpd
       <div className="space-y-4 px-2">
         {/* Sekcja Historii */}
         {pastLessons.length > 0 && (
-          <div className="border border-zinc-800 rounded-2xl overflow-hidden bg-zinc-950/40">
+          <div className="border border-zinc-800 rounded-2xl bg-zinc-950/40">
             <button
               onClick={() => setShowHistory(!showHistory)}
               className="w-full flex items-center justify-between p-4 hover:bg-zinc-900/50 transition-colors"
@@ -363,7 +374,7 @@ const Lessons: React.FC<LessonsProps> = ({ lessons, students, onAddLesson, onUpd
             </button>
 
             {showHistory && (
-              <div className="p-4 pt-0 space-y-2 animate-in fade-in slide-in-from-top-2 duration-300">
+              <div className="p-4 pt-0 space-y-2 animate-in fade-in slide-in-from-top-2 duration-300 overflow-visible z-30">
                 <div className="h-px bg-zinc-800 mb-4"></div>
                 {pastLessons.map(lesson => renderLessonRow(lesson))}
               </div>
