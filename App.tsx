@@ -7,6 +7,7 @@ import Dashboard from './components/Dashboard';
 import Students from './components/Students';
 import Lessons from './components/Lessons';
 import { Palette, Github, Heart, Menu, X, GraduationCap } from 'lucide-react';
+import logo from "/logo.png";
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -170,9 +171,11 @@ const App: React.FC = () => {
       <div className="flex-1 flex flex-col md:ml-64 min-w-0">
         <header className="sticky top-0 z-[80] flex md:hidden items-center justify-between px-4 py-4 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-800">
           <div className="flex items-center gap-2">
-            <div className={`p-1.5 rounded-lg ${theme.bgClass} text-white`}>
+            {/* <div className={`p-1.5 rounded-lg ${theme.bgClass} text-white`}>
               <GraduationCap size={20} />
-            </div>
+            </div> */}
+            <img src={logo} width={35} className='rounded-md' />
+
             <span className="font-bold text-lg">Korepetycje</span>
           </div>
           <button
