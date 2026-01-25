@@ -12,6 +12,8 @@ import {
 import { ThemeColor } from '../types';
 import { THEMES } from '../constants';
 
+import logo from "/logo.png";
+
 interface SidebarProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
@@ -32,9 +34,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, currentTheme
     <div className="w-64 h-full bg-zinc-900 border-r border-zinc-800 flex flex-col">
       <div className="p-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className={`p-2 rounded-lg ${theme.bgClass} text-white`}>
-            <GraduationCap size={24} />
-          </div>
+          <img src={logo} width={35} className='rounded-md' />
           <h1 className="font-bold text-lg tracking-tight">Korepetycje</h1>
         </div>
       </div>
